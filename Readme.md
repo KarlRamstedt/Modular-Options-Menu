@@ -78,4 +78,13 @@ Being careful to call the `base.Awake` function after to ensure proper initializ
 ## Tips & Tricks
 * Setting up explicit navigation is recommended if you have enough options to make menus activate scrolling as Unity's Automatic navigation can be wonky.
 
-Copyright © 2020, Karl Ramstedt
+
+# License & Copyright
+    Copyright © 2020 Karl Ramstedt
+    SPDX-License-Identifier: GPL-3.0-or-later
+
+**Summary**: You may copy, modify and distribute the code under the condition that modified versions and compiled software including the code are made publicly available under the same license. For details, read the included [license file](LICENSE).
+
+[The license can also be found here](https://www.gnu.org/licenses/gpl-3.0.html).
+
+If you wish to optain a different license please contact the copyright owner at: Ramstedt0404@gmail.com
