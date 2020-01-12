@@ -13,7 +13,7 @@ namespace ModularOptions {
 
 		protected override void Awake(){
 			if (!postProcessingProfile.TryGetSettings<MotionBlur>(out mb)) //Try to get the setting override
-				mb = (MotionBlur)postProcessingProfile.AddSettings<MotionBlur>(); //Create one if it can't be found
+				mb = postProcessingProfile.AddSettings<MotionBlur>(); //Create one if it can't be found
 			base.Awake();
 		}
 

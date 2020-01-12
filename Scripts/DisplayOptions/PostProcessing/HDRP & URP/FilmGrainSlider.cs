@@ -18,7 +18,7 @@ namespace ModularOptions {
 		
 		protected override void Awake(){
 			if (!postProcessingProfile.TryGet<FilmGrain>(out fg)) //Try to get the setting override
-				fg = (FilmGrain)postProcessingProfile.Add<FilmGrain>(true); //Create one if it can't be found
+				fg = postProcessingProfile.Add<FilmGrain>(true); //Create one if it can't be found
 			base.Awake();
 		}
 		

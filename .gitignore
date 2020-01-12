@@ -67,8 +67,8 @@ crashlytics-build.properties
 **/LOCALONLY*
 
 # For repo in Assets folder
+**/LICENSE.meta
 **/README.md.meta
-**/LICENSE.md.meta
 **/ReadmeAssets.meta
 **/ReadmeAssets/*.meta
 

@@ -19,7 +19,7 @@ namespace ModularOptions {
 
 		protected override void Awake(){
 			if (!postProcessingProfile.TryGet<ScreenSpaceReflection>(out ssr)) //Try to get the setting override
-				ssr = (ScreenSpaceReflection)postProcessingProfile.Add<ScreenSpaceReflection>(true); //Create one if it can't be found
+				ssr = postProcessingProfile.Add<ScreenSpaceReflection>(true); //Create one if it can't be found
 			base.Awake();
 		}
 

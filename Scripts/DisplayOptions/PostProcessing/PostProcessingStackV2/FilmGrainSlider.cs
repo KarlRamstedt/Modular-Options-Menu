@@ -15,7 +15,7 @@ namespace ModularOptions {
 		
 		protected override void Awake(){
 			if (!postProcessingProfile.TryGetSettings<Grain>(out fg)) //Try to get the setting override
-				fg = (Grain)postProcessingProfile.AddSettings<Grain>(); //Create one if it can't be found
+				fg = postProcessingProfile.AddSettings<Grain>(); //Create one if it can't be found
 			base.Awake();
 		}
 		

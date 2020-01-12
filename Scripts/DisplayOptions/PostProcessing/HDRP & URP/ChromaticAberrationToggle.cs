@@ -16,7 +16,7 @@ namespace ModularOptions {
 
 		protected override void Awake(){
 			if (!postProcessingProfile.TryGet<ChromaticAberration>(out ca)) //Try to get the setting override
-				ca = (ChromaticAberration)postProcessingProfile.Add<ChromaticAberration>(true); //Create one if it can't be found
+				ca = postProcessingProfile.Add<ChromaticAberration>(true); //Create one if it can't be found
 			base.Awake();
 		}
 

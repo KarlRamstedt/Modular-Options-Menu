@@ -19,7 +19,7 @@ namespace ModularOptions {
 
 		protected override void Awake(){
 			if (!postProcessingProfile.TryGet<AmbientOcclusion>(out ao)) //Try to get the setting override
-				ao = (AmbientOcclusion)postProcessingProfile.Add<AmbientOcclusion>(true); //Create one if it can't be found
+				ao = postProcessingProfile.Add<AmbientOcclusion>(true); //Create one if it can't be found
 			base.Awake();
 		}
 

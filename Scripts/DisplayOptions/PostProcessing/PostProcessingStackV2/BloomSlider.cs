@@ -15,7 +15,7 @@ namespace ModularOptions {
 		
 		protected override void Awake(){
 			if (!postProcessingProfile.TryGetSettings<Bloom>(out bloom)) //Try to get the setting override
-				bloom = (Bloom)postProcessingProfile.AddSettings<Bloom>(); //Create one if it can't be found
+				bloom = postProcessingProfile.AddSettings<Bloom>(); //Create one if it can't be found
 			base.Awake();
 		}
 		

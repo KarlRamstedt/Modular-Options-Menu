@@ -16,7 +16,7 @@ namespace ModularOptions {
 
 		protected override void Awake(){
 			if (!postProcessingProfile.TryGet<Vignette>(out vig)) //Try to get the setting override
-				vig = (Vignette)postProcessingProfile.Add<Vignette>(true); //Create one if it can't be found
+				vig = postProcessingProfile.Add<Vignette>(true); //Create one if it can't be found
 			base.Awake();
 		}
 
