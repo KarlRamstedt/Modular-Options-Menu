@@ -1,7 +1,7 @@
 # Modular Options Menu
 ![](ReadmeAssets/Menu_Example.png)
 
-A menu template and underlying system for use in the game engine Unity.
+A menu template and underlying system for use in the game engine [Unity](http://www.unity3d.com).
 
 This project aims to help users avoid the pain often involved in haphazard, hardcoded menu systems developed due to time-constraints or lack of interest.
 
@@ -9,37 +9,50 @@ This project aims to help users avoid the pain often involved in haphazard, hard
 * **Fully modular** - All options can be used by themselves or in any combination, without the need to ever touch the code.
 * **Easy to use** - Editor scripting automatically assigns variables for you and displays data in a user-friendly way.
 * **Flawless performance** - Entirely event-based. No part in the project has continuous execution (like `Update()`).
-* **Highly flexible menu template** - Easily changed and expanded. Adding a new option can be completed in seconds!
+* **[Flexible menu template](https://drive.google.com/file/d/1lw2GDCpjMe8CmNcpKf1osYrPbNt8CHgi)** - Easily changed and expanded. Adding a new option can be completed in seconds!
 * **Full controller and keyboard & mouse support** - All parts of the system support navigation in whichever way the user finds suitable.
 * **Lots of included options** - About 30 reference option implementations provided in the package.
-* **Easily extensible** - New option scripts can be created with just a few lines of code! Literally 1 line of code (excluding class and function declaration) if you don't need references.
+* **Easily extensible** - New option scripts can be created with just a few lines of code. Literally 1 line of code (excluding class and function declaration) if you don't need references!
 * **Supports external Assets** - All options support TextMeshPro and reference option implementations are included for [PostProcessingStackV2](https://github.com/Unity-Technologies/PostProcessing) and [Aura](https://assetstore.unity.com/packages/tools/particles-effects/aura-volumetric-lighting-111664).
-* **Support for URP and HDRP** - The Render Pipelines are still in development, with incomplete functionality, but reference implementations for most of the post-processing effect controls are included.
+* **Support for URP and HDRP** - Reference implementations for most of the post-processing effect controls are included.
 * **Lots of utility scripts** - UI interaction sounds, slider value display, scene reference attribute and more included.
-* **Compact** - The entire project is less than 1 megabyte in size as it consists of nothing more than code and prefabs.
 
 ## Installation
-Just unpack the Zip file into your Assets folder. After that just add the MenuTemplate prefab to your scene, or create your own and start working.
+Just add the project folder to your Assets folder.
 
 ### Supported Unity versions
-The menu template uses Unity's new prefab system, which requires 2018.3 to function.
+The MenuTemplate uses Unity's new prefab system, which requires 2018.3 to function.
 Other than that most of the scripts should work all the way back to even version 5.
 
+## Supported Render Pipelines
+Both Universal and HighDefinition Render Pipelines are supported. Not all options are exposed to scripting (I assume they will be; Render Pipelines are still very much in active development), but reference implementations of most of the available options are included.
+
+## External asset support
+[CheckForExternalAssets.cs](Scripts/NotForDirectUse/Editor/CheckForExternalAssets.cs) checks if external namespaces exist and compiles scripts accordingly. The moment you add any of the supported assets the options should recompile to support them. **Currently supported assets:**
+
+* **[TextMesh Pro](https://assetstore.unity.com/packages/essentials/beta-projects/textmesh-pro-84126)**
+* **[PostProcessingStackV2](https://github.com/Unity-Technologies/PostProcessing)**
+* **[Aura](https://assetstore.unity.com/packages/tools/particles-effects/aura-volumetric-lighting-111664)**
+
 ## How to use
-Most information can be gleaned from the MenuTemplate, so it's highly recommended to give that a look.
+Most information can be gleaned from the MenuTemplate prefab, so it's highly recommended to give that a look.
 
-The option classes should be added on the same GameObject as the UI-element they are supposed to work with. Then just add any external references needed by the option (e.g. PostProcessing options require references to profile assets containing option data).
+All the option classes can be added through the "Add Component" Menu, under "Modular Options".
 
-That's it. You now have a working option. Configure the values presented to the user through the UI-element class(e.g. Dropdown) itself, and set the default value in the option class, along with any potential option-name changes you wish to make.
+The option classes should be added on the same GameObject as the UI-element they are supposed to work with. Then just add any external references needed by the option (e.g. PostProcessing options require references to profile assets containing option data). That's it. You now have a working option. Configure the values presented to the user through the UI-element class(e.g. Dropdown) itself, and set the default value in the option class, along with any potential option-name changes you wish to make.
+
+If you wish to include added options in the Restore Defaults Button you can either manually add these or clear and automatically add options by clicking the cog-icon on the RestoreDefaultsButton and clicking "Auto-Fill Parent-Sibling Options" (success depends on menu hierarchy; it will work on the MenuTemplate).
 
 Now for the more fancy part: OptionPresets allow you to change any number of options through a single one. All options (except a few screen-related ones intentionally excluded) can be added to OptionPresets. Set up your options as you normally would, then reference all the Options you wish to control with the preset. The menu template contains a graphics preset you can look at for illustrative purposes. The OptionPreset class has a custom Editor to make keeping track of values easier. It exclusively uses SerializedProperties, and should handle data like any native Unity property in the Editor. Example images of the custom Editor:
 
 ![](ReadmeAssets/OptionPreset_Custom_Editor_2019.3_Example1.png)![](ReadmeAssets/OptionPreset_Custom_Editor_2019.3_Example2.png)
 
-If you wish to include added options in the Restore Defaults Button you can either manually add these or clear and automatically add all the found options by clicking the cog-icon on the RestoreDefaultsButton and clicking "Auto-Fill Parent-Sibling Options" (success depends on menu hierarchy).
+## Tips & Tricks
+* Changing color of your UI-elements is easy if you're using the included option template prefabs; Just change the color settings on the UI-element component on the Option prefab and it'll apply to all elements using that prefab!
+* Setting up explicit navigation is recommended if you have enough options to make menus activate scrolling as Unity's Automatic navigation can be wonky.
 
 ## Changing save-system
-The system uses Unity's PlayerPrefs by default. This can be swapped by changing 2 lines of code in DropdownOption, SliderOption and ToggleOption, and 1 in the SaveButton script. The easiest way of achieving this is simply to do a project-wide search for "PlayerPrefs" in your code editor and swapping the found occurrences.
+The system uses Unity's PlayerPrefs by default. This can be swapped by changing the contents of the class OptionSaveSystem found at the bottom of [OptionBase.cs](Scripts/NotForDirectUse/BaseClasses/OptionBase.cs).
 
 ## Extending the system
 If you already have public properties or functions for manipulating the option values in your scripts you can make use of the ExternalOptions. The only requirement is that the function/property accepts the data-type used by the UI-element as input (float for Sliders, int for Dropdowns and bool for Toggles). Just click the + button on the ExternalOption, drag a reference to the class you wish to modify and select the function that modifies the option, just make sure you're using the Dynamic float/int/bool version of the function to properly pass on the input value.
@@ -54,14 +67,14 @@ protected override void ApplySetting(float _value){
 	reference.value = _value;
 }
 ```
-If you need to grab the `reference` through code you should do so in the `Awake` function, like this:
+If you need to grab the `reference` through code you should do so in `Awake()`, like this:
 ```cs
 protected override void Awake(){
 	reference = CodeThatReturnsReference();
 	base.Awake();
 }
 ```
-Being careful to call the `base.Awake` function after to ensure proper initialization.
+Calling `base.Awake()` after to ensure proper initialization.
 
 **But ultimately, the easiest way to create new option scripts is simply to copy existing option scripts** with the functionality you want and just changing which values it modifies. All the basic option structures are present in the reference implementations included:
 
@@ -69,22 +82,18 @@ Being careful to call the `base.Awake` function after to ensure proper initializ
 
 [AmbientOcclusionDropdown](Scripts/DisplayOptions/PostProcessing/PostProcessingStackV2/AmbientOcclusionDropdown.cs): DropdownOption where the option has a separate variable controlling 'On'/'Off' state; index 0 acts as 'Off', while the rest of the options are populated by enums.
 
-[FieldOfViewSlider](Scripts/AudioOptions/FieldOfViewSlider.cs): standard SliderOption, with comments on how to override slider text formatting.
+[FieldOfViewSlider](Scripts/DisplayOptions/FieldOfViewSlider.cs): standard SliderOption, with comments on how to override slider text formatting.
 
 [BloomSlider](Scripts/DisplayOptions/PostProcessing/PostProcessingStackV2/BloomSlider.cs): SliderOption where the option has a separate variable controlling 'On'/'Off' state;  0 acts as 'Off'.
 
 [VSyncToggle](Scripts/DisplayOptions/VSyncToggle.cs): standard ToggleOption.
 
-## Tips & Tricks
-* Setting up explicit navigation is recommended if you have enough options to make menus activate scrolling as Unity's Automatic navigation can be wonky.
-
-
-# License & Copyright
+# License
     Copyright © 2020 Karl Ramstedt
     SPDX-License-Identifier: GPL-3.0-or-later
 
-**Summary**: You may copy, modify and distribute the code under the condition that modified versions and compiled software including the code are made publicly available under the same license. For details, read the included [license file](LICENSE).
+**Summary**: You are free to copy, modify and distribute the code under the condition that modified versions and compiled software including the code are made publicly available under the same license. For details, read the included [license file](LICENSE).
 
-[The license can also be found here](https://www.gnu.org/licenses/gpl-3.0.html).
+More info about the license can be found here: https://www.gnu.org/licenses/gpl-3.0.html
 
-If you wish to optain a different license please contact the copyright owner at: Ramstedt0404@gmail.com
+If you wish to obtain a different license feel free to contact me at: Ramstedt0404@gmail.com
