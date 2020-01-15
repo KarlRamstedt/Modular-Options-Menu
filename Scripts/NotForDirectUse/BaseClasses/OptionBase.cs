@@ -69,4 +69,42 @@ namespace ModularOptions {
 	/// Wrapper class for a bool. Does nothing, but is required by the framework.
 	/// </summary>
 	[System.Serializable] public class BoolToggle : UIDataType<bool> {}
+
+	/// <summary>
+	/// Acts like a wrapper for the SaveSystem to de-couple references in other parts of the system.
+	/// I.e: if you want to change save system it can be swapped right here.
+	/// </summary>
+	public static class OptionSaveSystem {
+		
+		public static void SaveFloat(string _key, float _value){
+			PlayerPrefs.SetFloat(_key, _value);
+		}
+		public static void SaveInt(string _key, int _value){
+			PlayerPrefs.SetInt(_key, _value);
+		}
+		public static void SaveBool(string _key, bool _value){
+			PlayerPrefs.SetInt(_key, _value ? 1 : 0); //Convert bool to int (1=true, 0=false)
+		}
+
+		public static float LoadFloat(string _key, float _defaultValue){
+			return PlayerPrefs.GetFloat(_key, _defaultValue);
+		}
+		public static int LoadInt(string _key, int _defaultValue){
+			return PlayerPrefs.GetInt(_key, _defaultValue);
+		}
+		public static bool LoadBool(string _key, bool _defaultValue){
+			if (PlayerPrefs.HasKey(_key))
+				return PlayerPrefs.GetInt(_key) > 0; //Converts int to bool (1=true, 0=false)
+			else
+				return _defaultValue;
+		}
+
+		/// <summary>
+		/// Changed settings are kept in memory even without calling PlayerPrefs.Save(), but not saved to disk until
+		/// PlayerPrefs.Save() is called or the application quits. Saving avoids loss of data in the case of a crash.
+		/// </summary>
+		public static void SaveToDisk(){
+			PlayerPrefs.Save();
+		}
+	}
 }

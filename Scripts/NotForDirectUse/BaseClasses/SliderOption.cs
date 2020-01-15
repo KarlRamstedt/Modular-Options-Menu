@@ -26,11 +26,11 @@ namespace ModularOptions {
 		protected virtual void Awake(){
 			slider = GetComponent<Slider>();
 			slider.onValueChanged.AddListener((float _) => OnValueChange(_)); //UI classes use Unity events, requiring delegates (delegate() { OnValueChange(); }) or lambda expressions (() => OnValueChange()). Listeners are not persistent, so no need to unsub
-			Value = PlayerPrefs.GetFloat(optionName, defaultSetting.value); //Saved value if there is one, else default. After subscribing so OnValueChange applies setting
+			Value = OptionSaveSystem.LoadFloat(optionName, defaultSetting.value); //Saved value if there is one, else default. After subscribing so OnValueChange applies setting
 		}
 
 		protected void OnValueChange(float _value){
-			PlayerPrefs.SetFloat(optionName, _value);
+			OptionSaveSystem.SaveFloat(optionName, _value);
 			ApplySetting(_value);
 			if (allowPresetCallback && preset != null)
 				preset.SetCustom();

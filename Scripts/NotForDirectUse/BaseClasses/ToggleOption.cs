@@ -27,14 +27,12 @@ namespace ModularOptions {
 			toggle = GetComponent<Toggle>();
 			toggle.onValueChanged.AddListener((bool _) => OnValueChange(_)); //UI classes use Unity events, requiring delegates (delegate() { OnValueChange(); }) or lambda expressions (() => OnValueChange()). Listeners are not persistent, so no need to unsub
 			//Restores saved value if there is one, else default. After subscribing so OnValueChange sets value
-			if (PlayerPrefs.HasKey(optionName))
-				Value = PlayerPrefs.GetInt(optionName) > 0; //Converts int to bool (1=true, 0=false)
-			else
-				Value = defaultSetting.value;
+			
+			Value = OptionSaveSystem.LoadBool(optionName, defaultSetting.value); //Saved value if there is one, else default. After subscribing so OnValueChange applies setting
 		}
 
 		protected void OnValueChange(bool _value){
-			PlayerPrefs.SetInt(optionName, _value ? 1 : 0); //Convert bool to int (1=true, 0=false)
+			OptionSaveSystem.SaveBool(optionName, _value);
 			ApplySetting(_value);
 			if (allowPresetCallback && preset != null)
 				preset.SetCustom();
