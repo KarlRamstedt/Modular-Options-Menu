@@ -14,17 +14,19 @@ namespace ModularOptions {
 			PostProcessLayer.Antialiasing.TemporalAntialiasing //TAA
 		};
 
-		PostProcessLayer ppl;
-
-		protected override void Awake(){ //Options could be autofetched (downside: cannot choose option names): string[] AAOptions = System.Enum.GetNames(typeof(PostProcessLayer.Antialiasing));
-			ppl = Camera.main.GetComponent<PostProcessLayer>();
-			base.Awake();
-		}
+		public PostProcessLayer ppl;
 
 		protected override void ApplySetting(int _value){
 			_value = Mathf.Min(_value, options.Length-1); //Limit max value to handle invalid saved values
 			ppl.antialiasingMode = options[_value];
 		}
+
+#if UNITY_EDITOR
+		protected override void Reset(){
+			ppl = Camera.main.GetComponent<PostProcessLayer>();
+			base.Reset();
+		}
+#endif
 	}
 }
 #endif

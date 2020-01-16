@@ -19,12 +19,17 @@ namespace ModularOptions {
 			new Vector3Int(320, 176, 128)
 		};
 
-		AuraAPI.Aura aura;
+		public AuraAPI.Aura aura;
 
-		protected override void Awake(){
+#if UNITY_EDITOR
+		/// <summary>
+		/// Auto-assign reference.
+		/// </summary>
+		protected override void Reset(){
 			aura = Camera.main.GetComponent<AuraAPI.Aura>();
-			base.Awake();
+			base.Reset();
 		}
+#endif
 
 		protected override void ApplySetting(int _value){
 			if (_value == 0){

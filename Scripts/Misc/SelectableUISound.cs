@@ -12,6 +12,15 @@ namespace ModularOptions {
 		[Tooltip("Reference to ScriptableObject containing sound data. Create a new one by right-clicking in the Project-window and clicking DataContainer/UI/SelectableSound")]
 		public SelectableUISoundData soundData;
 
+#if UNITY_EDITOR
+		/// <summary>
+		/// Auto-assign reference. Replace it in the editor if it was incorrect.
+		/// </summary>
+		void Reset(){
+			soundData = Resources.FindObjectsOfTypeAll<SelectableUISoundData>()[0];
+		}
+#endif
+
 		AudioSource audioSource;
 		void Awake(){
 			audioSource = GetComponent<AudioSource>();

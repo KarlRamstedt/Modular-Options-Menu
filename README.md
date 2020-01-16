@@ -25,7 +25,7 @@ The MenuTemplate uses Unity's new prefab system, which requires 2018.3 to functi
 Other than that most of the scripts should work all the way back to even version 5.
 
 ## Supported Render Pipelines
-Both Universal and HighDefinition Render Pipelines are supported. Not all options are exposed to scripting (I assume they will be; Render Pipelines are still very much in active development), but reference implementations of most of the available options are included.
+Both Universal and HighDefinition Render Pipelines are supported. Not all options are exposed to scripting (I assume they will be, Render Pipelines are still in active development), but reference implementations of most of the available options are included.
 
 ## External asset support
 [CheckForExternalAssets.cs](Scripts/NotForDirectUse/Editor/CheckForExternalAssets.cs) checks if external namespaces exist and compiles scripts accordingly. The moment you add any of the supported assets the options should recompile to support them. **Currently supported assets:**
@@ -54,7 +54,7 @@ Now for the more fancy part: OptionPresets allow you to change any number of opt
 ## Changing save-system
 The system uses Unity's PlayerPrefs by default. This can be swapped by changing the contents of the class OptionSaveSystem found at the bottom of [OptionBase.cs](Scripts/NotForDirectUse/BaseClasses/OptionBase.cs).
 
-## Extending the system
+## Extending the option system
 If you already have public properties or functions for manipulating the option values in your scripts you can make use of the ExternalOptions. The only requirement is that the function/property accepts the data-type used by the UI-element as input (float for Sliders, int for Dropdowns and bool for Toggles). Just click the + button on the ExternalOption, drag a reference to the class you wish to modify and select the function that modifies the option, just make sure you're using the Dynamic float/int/bool version of the function to properly pass on the input value.
 
 If you lack these public properties/functions or simply wish to have dedicated option classes, you can easily extend the system by inheriting from one of the 3 option base classes: `SliderOption`, `DropdownOption` and `ToggleOption` (all part of the `ModularOptions` namespace). Which is done by replacing `MonoBehaviour` in the script with one of those 3.
@@ -78,15 +78,15 @@ Calling `base.Awake()` after to ensure proper initialization.
 
 **But ultimately, the easiest way to create new option scripts is simply to copy existing option scripts** with the functionality you want and just changing which values it modifies. All the basic option structures are present in the reference implementations included:
 
-[TextureResolutionDropdown](Scripts/DisplayOptions/TextureResolutionDropdown.cs): standard DropdownOption.
+[Basic DropdownOption](Scripts/DisplayOptions/TextureResolutionDropdown.cs).
 
-[AmbientOcclusionDropdown](Scripts/DisplayOptions/PostProcessing/PostProcessingStackV2/AmbientOcclusionDropdown.cs): DropdownOption where the option has a separate variable controlling 'On'/'Off' state; index 0 acts as 'Off', while the rest of the options are populated by enums.
+[DropdownOption where the option has a separate variable controlling 'On'/'Off' state](Scripts/DisplayOptions/Aura/Aura1QualityDropdown.cs); index 0 acts as 'Off'.
 
-[FieldOfViewSlider](Scripts/DisplayOptions/FieldOfViewSlider.cs): standard SliderOption, with comments on how to override slider text formatting.
+[Basic SliderOption](Scripts/DisplayOptions/FieldOfViewSlider.cs), with comments on how to override slider text formatting.
 
-[BloomSlider](Scripts/DisplayOptions/PostProcessing/PostProcessingStackV2/BloomSlider.cs): SliderOption where the option has a separate variable controlling 'On'/'Off' state;  0 acts as 'Off'.
+[SliderOption where the option has a separate variable controlling 'On'/'Off' state](Scripts/DisplayOptions/PostProcessing/PostProcessingStackV2/BloomSlider.cs);  0 acts as 'Off'.
 
-[VSyncToggle](Scripts/DisplayOptions/VSyncToggle.cs): standard ToggleOption.
+[Basic ToggleOption](Scripts/DisplayOptions/VSyncToggle.cs).
 
 # License
     Copyright © 2020 Karl Ramstedt

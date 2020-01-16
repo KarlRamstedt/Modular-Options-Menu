@@ -6,6 +6,16 @@ namespace ModularOptions {
 
 		public Camera cam;
 
+#if UNITY_EDITOR
+		/// <summary>
+		/// Auto-assign editor reference, if suitable component is found.
+		/// </summary>
+		protected override void Reset(){
+			cam = Camera.main;
+			base.Reset();
+		}
+#endif
+
 		protected override void ApplySetting(float _value){
 			cam.fieldOfView = _value;
         }

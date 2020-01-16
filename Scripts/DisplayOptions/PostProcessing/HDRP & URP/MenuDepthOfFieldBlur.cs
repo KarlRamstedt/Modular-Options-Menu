@@ -24,6 +24,7 @@ namespace ModularOptions {
 		void Awake(){
 			if (!postProcessingProfile.TryGet<DepthOfField>(out dof)){ //Try to get the setting override
 				dof = postProcessingProfile.Add<DepthOfField>(true); //Create one if it can't be found
+				dof.active = false;
 			}
 		}
 

@@ -20,7 +20,7 @@ namespace ModularOptions {
 
 #if UNITY_EDITOR
 		/// <summary>
-		/// Auto-assign default editor values, if suitable components can be found.
+		/// Auto-assign editor references, if suitable components can be found.
 		/// </summary>
 		void Reset(){
 			rectToScrollTo = GetComponent<RectTransform>();

@@ -7,27 +7,17 @@ using UnityEngine.Rendering.HighDefinition;
 #endif
 namespace ModularOptions {
 	[AddComponentMenu("Modular Options/Display/PostProcessing/Bloom Slider")]
-	public sealed class BloomSlider : SliderOption {
+	public sealed class BloomSlider : PostProcessingSlider<Bloom> {
 		
 		[Tooltip("Slider value is multiplied by this for final intensity value. Default 0.01 is for use with 0 to 100% slider.")]
 		public float intensityFactor = 0.01f;
-		[Tooltip("Reference to global baseline profile.")]
-		public UnityEngine.Rendering.VolumeProfile postProcessingProfile;
-
-		Bloom bloom;
-		
-		protected override void Awake(){
-			if (!postProcessingProfile.TryGet<Bloom>(out bloom)) //Try to get the setting override
-				bloom = postProcessingProfile.Add<Bloom>(true); //Create one if it can't be found
-			base.Awake();
-		}
 		
 		protected override void ApplySetting(float _value){
-			if (_value <= 0){
-				bloom.active = false;
+			if (_value <= slider.minValue){
+				setting.active = false;
 			} else {
-				bloom.active = true;
-				bloom.intensity.value = _value * intensityFactor;
+				setting.active = true;
+				setting.intensity.value = _value * intensityFactor;
 			}
 		}
 	}

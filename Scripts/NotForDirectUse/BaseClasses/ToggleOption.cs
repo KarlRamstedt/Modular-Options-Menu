@@ -26,8 +26,6 @@ namespace ModularOptions {
 		protected virtual void Awake(){
 			toggle = GetComponent<Toggle>();
 			toggle.onValueChanged.AddListener((bool _) => OnValueChange(_)); //UI classes use Unity events, requiring delegates (delegate() { OnValueChange(); }) or lambda expressions (() => OnValueChange()). Listeners are not persistent, so no need to unsub
-			//Restores saved value if there is one, else default. After subscribing so OnValueChange sets value
-			
 			Value = OptionSaveSystem.LoadBool(optionName, defaultSetting.value); //Saved value if there is one, else default. After subscribing so OnValueChange applies setting
 		}
 
